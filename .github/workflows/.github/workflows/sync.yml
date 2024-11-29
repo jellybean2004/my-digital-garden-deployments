@@ -16,8 +16,7 @@ jobs:
         fetch-depth: 0 # Fetch all history
 
     - name: Add Source Repository
-      run: git remote add source https://github.com/source-username/source-repo.git
-
+      run: git remote add source https://github.com/jellybean2004/my-digital-garden
     - name: Fetch Source Changes
       run: git fetch source
 
