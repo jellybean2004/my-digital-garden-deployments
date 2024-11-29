@@ -1,0 +1,30 @@
+name: Sync Repository
+
+on:
+  schedule:
+    - cron: '0 23 * * *' # Runs daily at 23:00 UTC
+  workflow_dispatch: # Allows manual runs
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Destination Repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 # Fetch all history
+
+    - name: Add Source Repository
+      run: git remote add source https://github.com/source-username/source-repo.git
+
+    - name: Fetch Source Changes
+      run: git fetch source
+
+    - name: Merge Source into Destination
+      run: git merge source/main --allow-unrelated-histories
+
+    - name: Push Changes to Destination
+      run: git push origin main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
