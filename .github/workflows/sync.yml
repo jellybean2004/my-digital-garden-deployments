@@ -22,9 +22,15 @@ jobs:
       run: git fetch source
 
     - name: Merge Source into Destination
-      run: git merge source/main --allow-unrelated-histories
+      run: git merge source/main -X theirs --allow-unrelated-histories
 
     - name: Push Changes to Destination
       run: git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Show Git Status
+      run: git status
+    
+    - name: Show Current Branches
+      run: git branch -a
